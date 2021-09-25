@@ -10,16 +10,34 @@ function UI() { };
 
 UI.prototype.llenarOpciones = () => {
     const max = new Date().getFullYear(),
-          min = max - 20;
+        min = max - 20;
 
     const selectYear = document.querySelector('#year');
 
-    for(let i = max; i >= min; i--) {
+    for (let i = max; i >= min; i--) {
         let option = document.createElement('option');
         option.value = i;
         option.textContent = i;
         selectYear.appendChild(option);
     }
+}
+
+UI.prototype.mostrarMensaje = (mensaje, tipo) => {
+    const div = document.createElement('div');
+
+    tipo === 'error' ?
+        div.classList.add('error') :
+        div.classList.add('correcto')
+
+    div.classList.add('mensaje', 'mt-10');
+    div.textContent = mensaje;
+
+    const formulario = document.querySelector('#cotizar-seguro');
+    formulario.insertBefore(div, document.querySelector('#resultado'));
+
+    setTimeout(() => {
+        div.remove();
+    }, 3000)
 }
 
 //Intancias
@@ -45,9 +63,9 @@ function cotizarSeguro(e) {
     const year = document.querySelector('#year').value;
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
-    if(marca === '' || year === '' || tipo === '') {
-        // Mostrar mensaje de error
-    }else {
-        // Realizar cotizacion
-    }
+    if (marca === '' || year === '' || tipo === '') {
+        ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
+        return;
+    } 
+    ui.mostrarMensaje('Cotizando ...', 'exito');
 }
