@@ -37,7 +37,12 @@ UI.prototype.mostrarMensaje = (mensaje, tipo) => {
 
     setTimeout(() => {
         div.remove();
-    }, 3000)
+    }, 2000)
+}
+
+UI.prototype.limpiar = () => {
+    const mensajes = document.querySelectorAll('.mensaje');
+    mensajes.forEach(msg => msg.remove());
 }
 
 //Intancias
@@ -63,9 +68,12 @@ function cotizarSeguro(e) {
     const year = document.querySelector('#year').value;
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
+    ui.limpiar();
+
     if (marca === '' || year === '' || tipo === '') {
         ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
         return;
-    } 
+    }
+
     ui.mostrarMensaje('Cotizando ...', 'exito');
 }
